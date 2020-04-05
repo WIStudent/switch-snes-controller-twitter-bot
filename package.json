@@ -1,7 +1,7 @@
 {
-  "name": "snes-controller-availability-check",
+  "name": "switch-snes-controller-twitter-bot",
   "version": "1.0.0",
-  "description": "A script to check if the SNES controllers for Switch are available on the German Nintendo store.",
+  "description": "A twitter bot (@Switch_SNES_Bot) that tweets when the SNES controller for Switch is available on the German Nintendo store.",
   "author": {
     "name": "Tobias Trumm",
     "email": "info@tobiastrumm.de",
