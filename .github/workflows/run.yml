@@ -1,0 +1,37 @@
+# Install dependencies and run availability check
+
+name: Run
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set exec path
+      run: echo "::set-env name=EXEC_PATH::$(which google-chrome)"
+
+    - name: Read .nvmrc
+      run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
+      id: nvm
+
+    - name: Use Node.js (.nvmrc)
+      uses: actions/setup-node@v1
+      with:
+        node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+    - run: npm ci
+
+    - run: npm run check
+      env: 
+        ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+        ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+        CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+        CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
